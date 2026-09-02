@@ -1,0 +1,913 @@
+  :root{
+    --black: #0a0b0d;
+    --brushed-hi: #9a9ea3;
+    --text: #b7bac0;
+    --text-dim: #6d7075;
+    --hair: rgba(255,255,255,0.08);
+    --scratch-tex: none;
+    --cx: 50%;
+    --cy: 50%;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html,body{ height:100%; background: var(--black); overflow-x:hidden; }
+
+  body{
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    min-height:100vh;
+    position:relative;
+  }
+
+  /* ---------- Brushed metal background, fully static ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding: 6vw;
+    isolation:isolate;
+    overflow:hidden;
+    cursor:default;
+  }
+
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:0;
+    background:
+      radial-gradient(120% 90% at 50% 0%, #2a2d31 0%, #101215 55%, #08090a 100%);
+  }
+
+  .hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:0;
+    opacity:0.5;
+    mix-blend-mode: overlay;
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.035) 0px,
+      rgba(255,255,255,0.035) 1px,
+      rgba(0,0,0,0.05) 2px,
+      rgba(0,0,0,0.05) 3px,
+      transparent 4px,
+      transparent 7px
+    );
+  }
+
+  .noise-scratches{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+  }
+
+  .grain{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    opacity:0.06;
+    background-repeat:repeat;
+    mix-blend-mode:overlay;
+  }
+
+  /* reusable grain layer for any later section, same texture, no extra generation */
+  .grain-layer{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    opacity:0.05;
+    background-image: var(--grain-tex, none);
+    background-repeat:repeat;
+    background-size:160px 160px;
+    mix-blend-mode:overlay;
+  }
+
+  /* ---------- Giant leafhopper, shifted right, bigger, bleeding off edge ---
+     This is now doing the job of balancing the composition: instead of
+     sitting centered with empty space to its right, it's the thing THAT
+     FILLS the right side, large enough to run past the viewport edge,
+     like a huge emblem stamped off-register on the plate.
+  ----------------------------------------------------------------------------*/
+  .creature-band{
+    position:absolute;
+    top: 8vh;
+    bottom: 2vh;
+    left: 40%;
+    right: -14vw;
+    z-index:1;
+    pointer-events:none;
+  }
+
+  .creature-band svg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+  }
+
+  .creature-band path,
+  .creature-band ellipse,
+  .creature-band circle,
+  .creature-band line{
+    fill:none;
+    stroke: var(--brushed-hi);
+  }
+
+  .creature-dim{ opacity:0.055; }
+
+  .creature-bright{
+    opacity:0.95;
+    filter: blur(0.7px) drop-shadow(0 0 5px rgba(223,226,229,0.3));
+    -webkit-mask-image: radial-gradient(
+      190px 190px at var(--cx) var(--cy),
+      #000 0%,
+      rgba(0,0,0,0.85) 28%,
+      rgba(0,0,0,0.4) 55%,
+      rgba(0,0,0,0.1) 78%,
+      transparent 100%
+    );
+    mask-image: radial-gradient(
+      190px 190px at var(--cx) var(--cy),
+      #000 0%,
+      rgba(0,0,0,0.85) 28%,
+      rgba(0,0,0,0.4) 55%,
+      rgba(0,0,0,0.1) 78%,
+      transparent 100%
+    );
+  }
+  .creature-bright path,
+  .creature-bright ellipse,
+  .creature-bright circle,
+  .creature-bright line{
+    stroke: #dfe2e5;
+  }
+
+  /* ---------- Content ---------- */
+  .content{ position:relative; z-index:2; max-width: 1100px; }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--brushed-hi);
+    display:flex;
+    align-items:center;
+    gap: 0.9em;
+    margin-bottom: 2.4rem;
+  }
+  .eyebrow::before{
+    content:"";
+    width: 2.2em;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--brushed-hi));
+  }
+  .eyebrow span.tag{
+    padding: 0.25em 0.6em;
+    border: 1px solid var(--hair);
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+  }
+
+  h1{
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(2.8rem, 8vw, 6.4rem);
+    line-height: 0.92;
+    letter-spacing: 0.005em;
+    max-width: 14ch;
+  }
+
+  /* ---------- Flat matte text with a realistic static scratch texture -------
+     No pointer reactivity, no sweep, no glint. Settled matte metal.
+  ----------------------------------------------------------------------------*/
+  .glint{
+    position:relative;
+    display:inline-block;
+    background-image:
+      var(--scratch-tex),
+      linear-gradient(
+        180deg,
+        #9a9ea3 0%,
+        #82868b 30%,
+        #64676b 55%,
+        #75787c 78%,
+        #8b8e93 100%
+      );
+    background-repeat: repeat, no-repeat;
+    background-size: 320px 320px, 100% 100%;
+    background-blend-mode: overlay, normal;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color: transparent;
+    filter: drop-shadow(0 1px 0 rgba(0,0,0,0.7)) drop-shadow(0 -1px 0 rgba(255,255,255,0.1));
+  }
+
+  .subhead{
+    margin-top: 2.4rem;
+    max-width: 46ch;
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .subhead .accent{ color: var(--brushed-hi); }
+
+  .meta-row{
+    margin-top: 3.6rem;
+    display:flex;
+    gap: 3.2rem;
+    flex-wrap:wrap;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .meta-row div{
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--hair);
+    min-width: 140px;
+  }
+  .meta-row strong{
+    display:block;
+    color: var(--brushed-hi);
+    font-weight:500;
+    margin-top: 0.35rem;
+    letter-spacing: 0.02em;
+  }
+
+  .plate-corner{
+    position:absolute;
+    z-index:2;
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--hair);
+  }
+  .plate-corner.tl{ top: 2.2rem; left: 2.2rem; border-right:none; border-bottom:none; }
+  .plate-corner.br{ bottom: 2.2rem; right: 2.2rem; border-left:none; border-top:none; }
+
+  .scroll-hint{
+    position:absolute;
+    bottom: 2.4rem;
+    left: 6vw;
+    z-index:2;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    display:flex;
+    align-items:center;
+    gap:0.7em;
+  }
+  .scroll-hint::after{
+    content:"";
+    width:1px;
+    height:26px;
+    background: linear-gradient(var(--brushed-hi), transparent);
+  }
+
+  @media (max-width: 900px){
+    /* below this width the right-shifted bug would just collide with the
+       text block, so let it recede back to a centered, subtler presence */
+    .creature-band{
+      left: 8vw;
+      right: 8vw;
+      top: 18vh;
+      bottom: 12vh;
+    }
+  }
+
+  @media (max-width: 640px){
+    .meta-row{ gap: 1.8rem; }
+    .hero{ padding: 8vw 6vw; }
+  }
+
+  /* =========================================================================
+     SECTION 02: WHY IT MATTERS
+     Deliberately plain-text after the hero: the metal-text treatment stays
+     reserved for the hero headline (the page's one signature moment), so
+     everything below reads as calm, confident typography instead.
+  ==========================================================================*/
+  .why{
+    position:relative;
+    background: linear-gradient(180deg, #0a0b0d 0%, #111316 100%);
+    border-top: 1px solid var(--hair);
+    padding: 9vw 6vw 10vw;
+    overflow:hidden;
+  }
+
+  .why-grid{
+    position:relative;
+    z-index:1;
+    max-width: 1280px;
+    margin: 0 auto;
+    display:grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 5vw;
+    align-items:start;
+  }
+
+  .section-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--brushed-hi);
+    display:flex;
+    align-items:center;
+    gap: 0.9em;
+    margin-bottom: 1.8rem;
+  }
+  .section-tag::before{
+    content:"";
+    width: 2.2em;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--brushed-hi));
+  }
+
+  .why h2{
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(2.1rem, 4.4vw, 3.6rem);
+    line-height: 1.02;
+    color: #d7d9db;
+    max-width: 12ch;
+    margin-bottom: 1.8rem;
+  }
+
+  .why .lede{
+    font-size: clamp(1rem, 1.3vw, 1.1rem);
+    line-height: 1.7;
+    color: var(--text);
+    max-width: 46ch;
+  }
+
+  .why .lede + .lede{ margin-top: 1.2rem; }
+
+  .fact-list{
+    display:flex;
+    flex-direction:column;
+  }
+
+  .fact-row{
+    padding: 1.6rem 0;
+    border-top: 1px solid var(--hair);
+  }
+  .fact-row:last-child{ border-bottom: 1px solid var(--hair); }
+
+  .fact-label{
+    display:block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brushed-hi);
+    margin-bottom: 0.6rem;
+  }
+
+  .fact-row p{
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    max-width: 42ch;
+  }
+
+  .why-close{
+    position:relative;
+    z-index:1;
+    max-width: 1280px;
+    margin: 4.5rem auto 0;
+    padding-top: 2.2rem;
+    border-top: 1px solid var(--hair);
+  }
+
+  .why-close p{
+    font-size: clamp(1rem, 1.3vw, 1.15rem);
+    line-height: 1.7;
+    color: var(--text);
+    max-width: 60ch;
+  }
+
+  .why-close .accent{ color: var(--brushed-hi); }
+
+  @media (max-width: 860px){
+    .why-grid{
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+
+  /* =========================================================================
+     SECTION 04: CONTACT
+     Roster-plate team list on the left, a stamped contact/attachments plate
+     on the right, same corner-bracket language as the hero and UV stage.
+  ==========================================================================*/
+  .contact{
+    position:relative;
+    background: linear-gradient(180deg, #111316 0%, #0a0b0d 100%);
+    border-top: 1px solid var(--hair);
+    padding: 9vw 6vw 9vw;
+    overflow:hidden;
+  }
+
+  .contact-grid{
+    position:relative;
+    z-index:1;
+    max-width: 1280px;
+    margin: 0 auto;
+    display:grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 5vw;
+    align-items:start;
+  }
+
+  .contact h2{
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(2.1rem, 4.4vw, 3.6rem);
+    line-height: 1.02;
+    color: #d7d9db;
+    max-width: 14ch;
+    margin-bottom: 1.2rem;
+  }
+
+  .contact-intro{
+    font-size: clamp(1rem, 1.3vw, 1.1rem);
+    line-height: 1.7;
+    color: var(--text);
+    max-width: 46ch;
+    margin-bottom: 2.6rem;
+  }
+
+  .roster-group{ margin-bottom: 2.4rem; }
+  .roster-group:last-child{ margin-bottom: 0; }
+
+  .roster-group-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.9rem;
+  }
+
+  .roster-list{
+    display:flex;
+    flex-direction:column;
+  }
+
+  .roster-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--hair);
+  }
+  .roster-group .roster-list .roster-row:last-child{
+    border-bottom: 1px solid var(--hair);
+  }
+
+  .roster-name{
+    font-size: 1rem;
+    color: #d7d9db;
+    letter-spacing: 0.01em;
+  }
+
+  .roster-dept{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+    text-align:right;
+    white-space:nowrap;
+  }
+
+  .contact-plate{
+    position:relative;
+    border: 1px solid var(--hair);
+    padding: 2.4rem 2rem;
+  }
+
+  .contact-plate .plate-corner{ position:absolute; z-index:2; width:18px; height:18px; border:1px solid rgba(255,255,255,0.14); }
+  .contact-plate .plate-corner.tl{ top:-1px; left:-1px; border-right:none; border-bottom:none; }
+  .contact-plate .plate-corner.br{ bottom:-1px; right:-1px; border-left:none; border-top:none; }
+
+  .contact-block{ margin-bottom: 2rem; }
+  .contact-block:last-child{ margin-bottom:0; }
+
+  .contact-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brushed-hi);
+    margin-bottom: 0.7rem;
+  }
+
+  .contact-block address,
+  .contact-block p{
+    font-style:normal;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--text);
+  }
+
+  .contact-block a{
+    color: var(--brushed-hi);
+    text-decoration:none;
+    border-bottom: 1px solid rgba(154,158,163,0.35);
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .contact-block a:hover{ color:#e8eaed; border-color:#e8eaed; }
+
+  .attachment-list{ list-style:none; }
+  .attachment-row{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-top: 1px solid var(--hair);
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+  .attachment-list .attachment-row:last-child{ border-bottom: 1px solid var(--hair); }
+  .attachment-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    border: 1px solid var(--hair);
+    padding: 0.18em 0.5em;
+    white-space:nowrap;
+  }
+
+  @media (max-width: 860px){
+    .contact-grid{
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+
+  @media (max-width: 560px){
+    .roster-row{
+      flex-direction:column;
+      align-items:flex-start;
+      gap: 0.3rem;
+    }
+    .roster-dept{ text-align:left; white-space:normal; }
+    .attachment-row{
+      flex-direction:column;
+      align-items:flex-start;
+      gap: 0.4rem;
+    }
+  }
+
+  /* =========================================================================
+     SECTION 03: THE VANISHING (UV / VISIBLE TOGGLE)
+     The flagship interactive: flip between visible light and the UV band
+     birds actually hunt in, and watch the same wireframe nearly disappear.
+     This is the phenomenon the whole project is about, made tangible.
+  ==========================================================================*/
+  .uv-section{
+    position:relative;
+    background: #0a0b0d;
+    border-top: 1px solid var(--hair);
+    padding: 9vw 6vw 10vw;
+    overflow:hidden;
+  }
+
+  .uv-grid{
+    position:relative;
+    z-index:1;
+    max-width: 1280px;
+    margin: 0 auto;
+    display:grid;
+    grid-template-columns: 1fr 0.9fr;
+    gap: 5vw;
+    align-items:center;
+  }
+
+  .uv-copy h2{
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(2.1rem, 4.4vw, 3.6rem);
+    line-height: 1.02;
+    color: #d7d9db;
+    max-width: 13ch;
+    margin-bottom: 1.8rem;
+  }
+
+  .uv-copy .lede{
+    font-size: clamp(1rem, 1.3vw, 1.1rem);
+    line-height: 1.7;
+    color: var(--text);
+    max-width: 44ch;
+    margin-bottom: 1rem;
+  }
+
+  /* ---- the switch ---- */
+  .uv-switch{
+    margin-top: 2.6rem;
+    display:inline-flex;
+    align-items:center;
+    gap: 0.9rem;
+    background:none;
+    border:none;
+    -webkit-appearance:none;
+    appearance:none;
+    cursor:pointer;
+    font-family:'IBM Plex Mono', monospace;
+    padding: 0.4rem 0.4rem 0.4rem 0;
+  }
+  .uv-switch:focus-visible{
+    outline: 1px solid var(--brushed-hi);
+    outline-offset: 4px;
+  }
+
+  .uv-switch-label{
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    transition: color 0.4s ease;
+  }
+  .uv-switch-label.is-active{ color: var(--brushed-hi); }
+
+  .uv-switch-track{
+    position:relative;
+    width: 58px;
+    height: 26px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #2c2f33, #1a1c1f);
+    border: 1px solid var(--hair);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.6);
+  }
+
+  .uv-switch-thumb{
+    position:absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #d7d9db, #9a9ea3);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    transition: transform 0.35s cubic-bezier(.65,0,.35,1), background 0.4s ease;
+  }
+  .uv-switch.is-uv .uv-switch-thumb{
+    transform: translateX(32px);
+    background: linear-gradient(180deg, #b9a8ff, #7c62d9);
+  }
+
+  /* ---- the stage ---- */
+  .uv-stage{
+    position:relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    max-width: 400px;
+    margin-inline: auto;
+    border: 1px solid var(--hair);
+    overflow:hidden;
+  }
+
+  .uv-stage-corner{
+    position:absolute;
+    z-index:3;
+    width: 18px;
+    height: 18px;
+    border: 1px solid rgba(255,255,255,0.14);
+    pointer-events:none;
+  }
+  .uv-stage-corner.tl{ top:10px; left:10px; border-right:none; border-bottom:none; }
+  .uv-stage-corner.br{ bottom:10px; right:10px; border-left:none; border-top:none; }
+
+  .uv-backdrop{
+    position:absolute; inset:0;
+    background: radial-gradient(120% 100% at 50% 0%, #24262a 0%, #101215 60%, #0a0b0d 100%);
+    transition: background 0.7s ease;
+  }
+  .uv-stage.is-uv .uv-backdrop{
+    background: radial-gradient(120% 100% at 50% 0%, #251a3f 0%, #170f2c 55%, #0a0716 100%);
+  }
+
+  .uv-photo{
+    position:absolute;
+    left:50%; top:46%;
+    transform: translate(-50%,-50%) scale(1);
+    height: 62%;
+    width: auto;
+    filter: grayscale(0.1) contrast(1.05) blur(0px);
+    transition: opacity 0.9s cubic-bezier(.22,.61,.36,1),
+                filter 0.9s cubic-bezier(.22,.61,.36,1),
+                transform 0.9s cubic-bezier(.22,.61,.36,1);
+  }
+  .uv-photo.is-visible-shot{ opacity:1; }
+  .uv-photo.is-uv-shot{ opacity:0; }
+  .uv-stage.is-uv .uv-photo.is-visible-shot{ opacity:0; transform: translate(-50%,-50%) scale(0.97); }
+  .uv-stage.is-uv .uv-photo.is-uv-shot{ opacity:1; }
+
+  /* brief blur+glow pulse on whichever photo is arriving, driven by JS toggling .is-transitioning */
+  .uv-stage.is-transitioning .uv-photo.is-visible-shot,
+  .uv-stage.is-transitioning .uv-photo.is-uv-shot{
+    filter: grayscale(0.1) contrast(1.05) blur(2.5px);
+  }
+  .uv-stage.is-uv.is-transitioning .uv-photo.is-uv-shot{
+    filter: grayscale(0) contrast(1.15) blur(2.5px) brightness(1.3);
+  }
+
+  /* sweeping scan line, fired once per toggle via JS restarting the animation */
+  .uv-scan{
+    position:absolute;
+    left:0; right:0;
+    top:0;
+    height: 2px;
+    z-index:4;
+    pointer-events:none;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(154,158,163,0.9) 50%,
+      transparent 100%);
+    box-shadow: 0 0 12px 2px rgba(154,158,163,0.55);
+    opacity:0;
+  }
+  .uv-stage.is-uv .uv-scan{
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(180,150,255,0.95) 50%,
+      transparent 100%);
+    box-shadow: 0 0 14px 3px rgba(150,110,255,0.6);
+  }
+  .uv-scan.is-sweeping{
+    animation: uv-scan-sweep 0.9s cubic-bezier(.4,0,.2,1);
+  }
+  @keyframes uv-scan-sweep{
+    0%   { top: 0%;   opacity: 0; }
+    8%   { opacity: 1; }
+    92%  { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+
+  .uv-stat{
+    position:absolute;
+    top: 14px;
+    right: 16px;
+    z-index:3;
+    text-align:right;
+    font-family:'IBM Plex Mono', monospace;
+    opacity:0;
+    transform: translateY(-4px);
+    transition: opacity 0.6s ease 0.25s, transform 0.6s ease 0.25s;
+  }
+  .uv-stage.is-uv .uv-stat{
+    opacity:1;
+    transform: translateY(0);
+  }
+  .uv-stat-num{
+    display:block;
+    font-size: 1.7rem;
+    font-weight:500;
+    color: #cdd7ff;
+    line-height:1;
+  }
+  .uv-stat-label{
+    display:block;
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    margin-top: 0.3rem;
+    max-width: 11ch;
+  }
+
+  .uv-credit{
+    position:absolute;
+    left: 0; right: 0; top: 0;
+    z-index:3;
+    padding: 0.7rem 1rem 0;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.04em;
+    color: rgba(154,158,163,0.7);
+  }
+  .uv-credit a{ color: inherit; }
+
+  .uv-caption{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    z-index:3;
+    padding: 0.9rem 1rem;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    line-height: 1.5;
+    color: var(--text-dim);
+    background: linear-gradient(0deg, rgba(0,0,0,0.55), transparent);
+  }
+
+  @media (max-width: 860px){
+    .uv-grid{
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .uv-stage{ margin-inline:0; }
+  }
+
+  /* ---- inline citation markers, used inside .lede/.fact-row copy ---- */
+  .cite{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.72em;
+    color: var(--brushed-hi);
+    text-decoration: none;
+    vertical-align: super;
+    padding: 0 0.05em;
+    border-bottom: none;
+    transition: color 0.2s ease;
+  }
+  .cite:hover{ color: #e8eaed; }
+  .cite:focus-visible{ outline: 1px solid var(--brushed-hi); outline-offset: 2px; }
+
+  /* =========================================================================
+     REFERENCES
+  ==========================================================================*/
+  .refs{
+    position:relative;
+    background: #0a0b0d;
+    border-top: 1px solid var(--hair);
+    padding: 7vw 6vw 8vw;
+  }
+
+  .refs-inner{
+    position:relative;
+    z-index:1;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .refs h2{
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+    color: #d7d9db;
+    margin-bottom: 2.2rem;
+  }
+
+  .refs-list{
+    list-style:none;
+    counter-reset: refnum;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .refs-list li{
+    counter-increment: refnum;
+    display:grid;
+    grid-template-columns: 2.4rem 1fr;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    border-top: 1px solid var(--hair);
+    scroll-margin-top: 6rem;
+  }
+  .refs-list li:last-child{ border-bottom: 1px solid var(--hair); }
+
+  .refs-list li::before{
+    content: counter(refnum);
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+
+  .refs-list li:target{
+    background: rgba(154,158,163,0.06);
+  }
+
+  .ref-entry{
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+  }
+
+  .ref-entry a{
+    color: var(--brushed-hi);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(154,158,163,0.35);
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .ref-entry a:hover{
+    color: #e8eaed;
+    border-color: #e8eaed;
+  }

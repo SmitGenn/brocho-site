@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brochosome Research: Hero POC v9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<section class="hero" id="hero">
+
+  <svg class="noise-scratches" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="none">
+    <line x1="0%"  y1="18%" x2="100%" y2="16.5%" stroke="rgba(255,255,255,0.05)"  stroke-width="1"/>
+    <line x1="0%"  y1="33%" x2="100%" y2="34%"   stroke="rgba(255,255,255,0.035)" stroke-width="1"/>
+    <line x1="10%" y1="52%" x2="92%"  y2="51%"   stroke="rgba(0,0,0,0.25)"        stroke-width="1"/>
+    <line x1="0%"  y1="61%" x2="100%" y2="62.5%" stroke="rgba(255,255,255,0.04)"  stroke-width="0.6"/>
+    <line x1="5%"  y1="74%" x2="70%"  y2="73.4%" stroke="rgba(255,255,255,0.045)" stroke-width="1"/>
+    <line x1="20%" y1="85%" x2="100%" y2="86%"   stroke="rgba(0,0,0,0.2)"         stroke-width="1"/>
+    <line x1="0%"  y1="8%"  x2="45%"  y2="7.6%"  stroke="rgba(255,255,255,0.03)"  stroke-width="0.5"/>
+    <line x1="55%" y1="95%" x2="100%" y2="94.3%" stroke="rgba(255,255,255,0.03)"  stroke-width="0.5"/>
+  </svg>
+  <div class="grain" id="grain"></div>
+
+  <!-- ONE leafhopper, now shifted right and enlarged so it fills the space
+       that used to sit empty. It bleeds off the right edge of the viewport
+       on purpose, like an emblem stamped larger than the plate. -->
+  <div class="creature-band" id="creatureBand">
+    <svg class="creature-dim" viewBox="-60 -60 420 720" preserveAspectRatio="xMidYMid meet" stroke-width="1.4">
+      <path d="M118,15 Q80,-25 38,-46"/>
+      <path d="M182,15 Q220,-25 262,-46"/>
+      <ellipse cx="150" cy="42" rx="46" ry="34"/>
+      <circle cx="113" cy="36" r="9"/>
+      <circle cx="187" cy="36" r="9"/>
+      <path d="M135,58 L165,58 L150,80 Z"/>
+      <path d="M104,70 L196,70 L232,120 L68,120 Z"/>
+      <path d="M20,160 C8,300 40,520 150,624 C260,520 292,300 280,160 C260,132 40,132 20,160 Z"/>
+      <line x1="150" y1="120" x2="150" y2="624"/>
+      <line x1="150" y1="180" x2="58" y2="258"/>
+      <line x1="150" y1="180" x2="242" y2="258"/>
+      <line x1="150" y1="262" x2="46" y2="382"/>
+      <line x1="150" y1="262" x2="254" y2="382"/>
+      <line x1="150" y1="360" x2="58" y2="480"/>
+      <line x1="150" y1="360" x2="242" y2="480"/>
+      <line x1="150" y1="460" x2="92" y2="560"/>
+      <line x1="150" y1="460" x2="208" y2="560"/>
+      <path d="M75,95 L18,112 L-14,160"/>
+      <path d="M-14,160 L-30,176"/>
+      <path d="M225,95 L282,112 L314,160"/>
+      <path d="M314,160 L330,176"/>
+      <path d="M64,132 L4,160 L-28,214"/>
+      <path d="M-28,214 L-44,230"/>
+      <path d="M236,132 L296,160 L328,214"/>
+      <path d="M328,214 L344,230"/>
+      <path d="M76,156 L20,200 L-2,258"/>
+      <path d="M-2,258 L-18,278"/>
+      <path d="M224,156 L280,200 L302,258"/>
+      <path d="M302,258 L318,278"/>
+    </svg>
+
+    <svg class="creature-bright" viewBox="-60 -60 420 720" preserveAspectRatio="xMidYMid meet" stroke-width="1.4">
+      <path d="M118,15 Q80,-25 38,-46"/>
+      <path d="M182,15 Q220,-25 262,-46"/>
+      <ellipse cx="150" cy="42" rx="46" ry="34"/>
+      <circle cx="113" cy="36" r="9"/>
+      <circle cx="187" cy="36" r="9"/>
+      <path d="M135,58 L165,58 L150,80 Z"/>
+      <path d="M104,70 L196,70 L232,120 L68,120 Z"/>
+      <path d="M20,160 C8,300 40,520 150,624 C260,520 292,300 280,160 C260,132 40,132 20,160 Z"/>
+      <line x1="150" y1="120" x2="150" y2="624"/>
+      <line x1="150" y1="180" x2="58" y2="258"/>
+      <line x1="150" y1="180" x2="242" y2="258"/>
+      <line x1="150" y1="262" x2="46" y2="382"/>
+      <line x1="150" y1="262" x2="254" y2="382"/>
+      <line x1="150" y1="360" x2="58" y2="480"/>
+      <line x1="150" y1="360" x2="242" y2="480"/>
+      <line x1="150" y1="460" x2="92" y2="560"/>
+      <line x1="150" y1="460" x2="208" y2="560"/>
+      <path d="M75,95 L18,112 L-14,160"/>
+      <path d="M-14,160 L-30,176"/>
+      <path d="M225,95 L282,112 L314,160"/>
+      <path d="M314,160 L330,176"/>
+      <path d="M64,132 L4,160 L-28,214"/>
+      <path d="M-28,214 L-44,230"/>
+      <path d="M236,132 L296,160 L328,214"/>
+      <path d="M328,214 L344,230"/>
+      <path d="M76,156 L20,200 L-2,258"/>
+      <path d="M-2,258 L-18,278"/>
+      <path d="M224,156 L280,200 L302,258"/>
+      <path d="M302,258 L318,278"/>
+    </svg>
+  </div>
+
+  <div class="plate-corner tl"></div>
+  <div class="plate-corner br"></div>
+
+  <div class="content">
+    <div class="eyebrow">
+      <span>Bio-Inspired Materials Research</span>
+      <span class="tag">Unclassified</span>
+    </div>
+
+    <h1><span class="glint">Nature Already<br>Solved Invisibility.</span></h1>
+
+    <p class="subhead">
+      A leafhopper insect coats itself in microscopic geometry that scatters
+      ultraviolet light almost completely, hiding it from predators that see
+      in that spectrum.<a href="#ref12" class="cite">[12]</a><a href="#ref13" class="cite">[13]</a>
+      We're replicating that geometry as a synthetic
+      <span class="accent">meta-material</span>, a passive, terrain-independent
+      way to reduce how visible an object or person is to detection.
+    </p>
+
+    <div class="meta-row">
+      <div>Origin<strong>Macrosteles fascifrons</strong></div>
+      <div>Mechanism<strong>Mie Scattering</strong></div>
+      <div>Status<strong>Active Fabrication</strong></div>
+      <div>Institution<strong>USMA</strong></div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<section class="why">
+  <div class="grain-layer"></div>
+
+  <div class="why-grid">
+    <div>
+      <h2>Camouflage Without a Pattern.</h2>
+      <p class="lede">
+        Most anti-reflective coatings are engineered from a blank sheet.
+        This one already survived roughly four hundred million years of
+        being hunted. Birds, the leafhopper's primary predator, see well
+        into the ultraviolet, a part of the spectrum invisible to us. The
+        brochosome's geometry evolved specifically to defeat that
+        vision,<a href="#ref5" class="cite">[5]</a> scattering UV light so
+        completely that the insect effectively disappears to the eyes
+        hunting it.<a href="#ref13" class="cite">[13]</a>
+      </p>
+      <p class="lede">
+        The shape is what we're replicating, not a color or a pattern.
+        That's what makes it useful<a href="#ref12" class="cite">[12]</a>
+        beyond one insect and one predator.
+      </p>
+    </div>
+
+    <div class="fact-list">
+      <div class="fact-row">
+        <span class="fact-label">Predator-Independent</span>
+        <p>The geometry scatters light itself. It doesn't rely on
+          color-matching a background or mimicking a specific
+          environment.<a href="#ref12" class="cite">[12]</a></p>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">Fully Passive</span>
+        <p>No power source, no moving parts, no active signal to detect.
+          The effect comes entirely from the particle's shape.</p>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">Orientation &amp; Weather Agnostic</span>
+        <p>Because scattering happens at the particle level, performance
+          doesn't depend on viewing angle, lighting conditions, or
+          terrain, a limitation most camouflage approaches share.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="why-close">
+    <p>
+      The same shape-driven concealment principle is now being tested for
+      a very different kind of exposure: how easily objects and
+      personnel can be detected across the
+      <span class="accent">optical and radio spectrum</span>, built on
+      four hundred million years of field testing.
+    </p>
+  </div>
+</section>
+
+<section class="uv-section">
+  <div class="grain-layer"></div>
+
+  <div class="uv-grid">
+    <div class="uv-copy">
+      <h2>This Is What A Predator Sees.</h2>
+      <p class="lede">
+        Flip the switch. The photograph on the right is the same insect,
+        shot under the two conditions that matter: the light we see
+        in, and the light a hunting bird sees in. Nothing about the leafhopper
+        changes between the two states. Only the wavelength does. The
+        underlying physics is Mie scattering<a href="#ref10" class="cite">[10]</a>,
+        the same effect that governs how any particle scatters light
+        near its own size.
+      </p>
+      <p class="lede">
+        That's the entire premise of this project: geometry that
+        disappears in exactly the band that predation depends on.
+      </p>
+
+      <button class="uv-switch" id="uvSwitch" type="button" role="switch" aria-checked="false" aria-label="Toggle between visible light and ultraviolet view">
+        <span class="uv-switch-label is-active" id="uvLabelLeft">Visible</span>
+        <span class="uv-switch-track"><span class="uv-switch-thumb"></span></span>
+        <span class="uv-switch-label" id="uvLabelRight">UV</span>
+      </button>
+    </div>
+
+    <div class="uv-stage" id="uvStage">
+      <div class="uv-backdrop"></div>
+      <div class="uv-stage-corner tl"></div>
+      <div class="uv-stage-corner br"></div>
+      <div class="uv-scan" id="uvScan"></div>
+
+      <img class="uv-photo is-visible-shot" src="images/leafhopper-visible.png" alt="The leafhopper Macrosteles fascifrons photographed under visible light, appearing bright yellow-green and clearly visible.">
+      <img class="uv-photo is-uv-shot" src="images/leafhopper-uv.png" alt="The same leafhopper photographed under ultraviolet light, appearing as a faint dark silhouette, nearly invisible.">
+
+      <div class="uv-credit">Photograph: Wu et al., 2025, <em>eLife</em><a href="#ref13" class="cite">[13]</a> · CC BY 4.0</div>
+
+      <div class="uv-stat">
+        <span class="uv-stat-num">94%</span>
+        <span class="uv-stat-label">less light reflected back<a href="#ref12" class="cite">[12]</a></span>
+      </div>
+
+      <div class="uv-caption" id="uvCaption">Visible light. Clearly visible to predators.</div>
+    </div>
+  </div>
+</section>
+
+<section class="contact">
+  <div class="grain-layer"></div>
+
+  <div class="contact-grid">
+    <div>
+      <h2>Who's Behind It.</h2>
+      <p class="contact-intro">
+        The current team is small by design during a rebuilding year.
+        Earlier contributors, among others, laid groundwork this project
+        still builds on.
+      </p>
+
+      <div class="roster-group">
+        <div class="roster-group-label">Current Team</div>
+        <div class="roster-list">
+          <div class="roster-row">
+            <span class="roster-name">Gennaro M. Smith</span>
+            <span class="roster-dept">Electrical Eng. &amp; Computer Science</span>
+          </div>
+          <div class="roster-row">
+            <span class="roster-name">Benjamin D. Garcia</span>
+            <span class="roster-dept">Physics &amp; Nuclear Eng.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roster-group">
+        <div class="roster-group-label">Research Advisors</div>
+        <div class="roster-list">
+          <div class="roster-row">
+            <span class="roster-name">LTC Jacob W. Capps</span>
+            <span class="roster-dept">Physics &amp; Nuclear Eng.</span>
+          </div>
+          <div class="roster-row">
+            <span class="roster-name">LTC William K. North</span>
+            <span class="roster-dept">Electrical Eng. &amp; Computer Science</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roster-group">
+        <div class="roster-group-label">Early Contributors</div>
+        <div class="roster-list">
+          <div class="roster-row">
+            <span class="roster-name">Elaine J. Joyce</span>
+            <span class="roster-dept">Mechanical &amp; Aerospace Eng.</span>
+          </div>
+          <div class="roster-row">
+            <span class="roster-name">Pierce A. Bazewicz</span>
+            <span class="roster-dept">Mechanical &amp; Aerospace Eng.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-plate">
+      <div class="plate-corner tl"></div>
+      <div class="plate-corner br"></div>
+
+      <div class="contact-block">
+        <div class="contact-label">Institution</div>
+        <address>
+          USMA<br>
+          West Point, NY 10996
+        </address>
+      </div>
+
+      <div class="contact-block">
+        <div class="contact-label">Point of Contact</div>
+        <p><a href="mailto:benjamin.garcia@westpoint.edu">benjamin.garcia@westpoint.edu</a></p>
+      </div>
+
+      <div class="contact-block">
+        <div class="contact-label">Attachments</div>
+        <ul class="attachment-list">
+          <li class="attachment-row">
+            <span>Material Cloaking, IEEE RAPID Submission</span>
+            <span class="attachment-tag">PDF</span>
+          </li>
+          <li class="attachment-row">
+            <span>HEART Conference Submission, 2026</span>
+            <span class="attachment-tag">PDF</span>
+          </li>
+          <li class="attachment-row">
+            <span>RAPID 2026 Presentation</span>
+            <span class="attachment-tag">PPTX</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="refs">
+  <div class="refs-inner">
+    <h2>References</h2>
+
+    <ol class="refs-list">
+      <li id="ref1">
+        <p class="ref-entry">Alitalo, P., Ranvier, S., Vehmas, J., &amp; Tretyakov, S. A microwave transmission-line network guiding electromagnetic fields through a dense array of metallic objects. Department of Radio Science and Engineering / SMARAD Center of Excellence, TKK Helsinki University of Technology, Elsevier.</p>
+      </li>
+      <li id="ref2">
+        <p class="ref-entry">Capps, J. W. (2022). Application and validation of Geant4 modeling for optimization of complex structures for fast neutron detection (Doctoral dissertation, Oregon State University). Department of Physics.</p>
+      </li>
+      <li id="ref3">
+        <p class="ref-entry">Chu, H., Li, Q., Liu, B., et al. (2018). A hybrid invisibility cloak based on integration of transparent metasurfaces and zero-index materials. <em>Light: Science &amp; Applications</em>, 7(50). <a href="https://doi.org/10.1038/s41377-018-0052-7" target="_blank" rel="noopener noreferrer">doi.org/10.1038/s41377-018-0052-7</a></p>
+      </li>
+      <li id="ref4">
+        <p class="ref-entry">Keysight Technologies. Technical specifications for 9018-70012. Keysight / Electro Rent.</p>
+      </li>
+      <li id="ref5">
+        <p class="ref-entry">Rakitov, R., Moysa, A. A., Kopylov, A. T., et al. (2018). Brochosomins and other novel proteins from brochosomes of leafhoppers (Insecta, Hemiptera, Cicadellidae). <em>Insect Biochemistry and Molecular Biology</em>, 94, 10–17. <a href="https://doi.org/10.1016/j.ibmb.2018.01.001" target="_blank" rel="noopener noreferrer">doi.org/10.1016/j.ibmb.2018.01.001</a></p>
+      </li>
+      <li id="ref6">
+        <p class="ref-entry">Ramsey Electronics. STE6000M RF shielded test enclosure. Ramsey Electronics.</p>
+      </li>
+      <li id="ref7">
+        <p class="ref-entry">Smith, D. S., &amp; Littau, V. G. (1960). Cellular specialization in the excretory epithelia of an insect, <em>Macrosteles fascifrons</em> Stål (Homoptera). <em>Journal of Cell Biology</em>, 8, 103–133.</p>
+      </li>
+      <li id="ref8">
+        <p class="ref-entry">Smith, G. A. (2022). Fresnel equations. The University of Arizona, Wyant College of Optical Sciences. <a href="https://webs.optics.arizona.edu/gsmith/Fresnel.html" target="_blank" rel="noopener noreferrer">webs.optics.arizona.edu/gsmith/Fresnel.html</a></p>
+      </li>
+      <li id="ref9">
+        <p class="ref-entry">Thompson, S. M., Talò, M., Krause, B., et al. (2022). The effect of branched carbon nanotubes as reinforcing nano-filler in polymer nanocomposites. <em>Composite Structures</em>, 295, 115794. <a href="https://doi.org/10.1016/j.compstruct.2022.115794" target="_blank" rel="noopener noreferrer">doi.org/10.1016/j.compstruct.2022.115794</a></p>
+      </li>
+      <li id="ref10">
+        <p class="ref-entry">Thurner, G. C., &amp; Debbage, P. (2018). Molecular imaging with nanoparticles: The dwarf actors revisited 10 years later. <em>Histochemistry and Cell Biology</em>, 150(6), 733–794. <a href="https://doi.org/10.1007/s00418-018-1753-y" target="_blank" rel="noopener noreferrer">doi.org/10.1007/s00418-018-1753-y</a></p>
+      </li>
+      <li id="ref11">
+        <p class="ref-entry">Valagiannopoulos, C. A., &amp; Alitalo, P. (2012). Electromagnetic cloaking of PEC cylinders with a single isotropic and homogeneous layer. In <em>Proceedings of the 2012 IEEE International Symposium on Antennas and Propagation</em> (pp. 1–2). IEEE. <a href="https://doi.org/10.1109/APS.2012.6348712" target="_blank" rel="noopener noreferrer">doi.org/10.1109/APS.2012.6348712</a></p>
+      </li>
+      <li id="ref12">
+        <p class="ref-entry">Wang, L., Li, Z., Shen, S., &amp; Wong, T.-S. (2024). Geometric design of antireflective leafhopper brochosomes. <em>Proceedings of the National Academy of Sciences</em>, 121(14), e2312700121. <a href="https://doi.org/10.1073/pnas.2312700121" target="_blank" rel="noopener noreferrer">doi.org/10.1073/pnas.2312700121</a></p>
+      </li>
+      <li id="ref13">
+        <p class="ref-entry">Wu, W., Mao, Q., Ye, Z., et al. (2025). Brochosomes as an antireflective camouflage coating for leafhoppers. <em>eLife</em>. <a href="https://doi.org/10.7554/eLife.99639.2" target="_blank" rel="noopener noreferrer">doi.org/10.7554/eLife.99639.2</a></p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<script src="js/main.js"></script>
+
+</body>
+</html>
